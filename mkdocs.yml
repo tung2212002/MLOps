@@ -1,0 +1,29 @@
+site_name: "MLOps Project Documentation"
+theme: readthedocs
+nav:
+  - Home: index.md
+  - Technologies:
+      - FastAPI: technologies/fastapi.md 
+      - MLflow: technologies/mlflow.md
+      - DVC: technologies/dvc.md
+      - Docker: technologies/docker.md
+      - AWS S3: technologies/s3.md
+  - Setup:
+      - Overview: setup/overview.md
+      - Installation: setup/installation.md
+      - Environment Variables: setup/environment.md
+  - Pipeline:
+      - Overview: pipeline/overview.md
+      - Steps: pipeline/steps.md
+      - Reproducing the Pipeline: pipeline/reproduce.md
+  - API Guide:
+      - Overview: api/overview.md
+      - Endpoints: api/endpoints.md
+  - Experiment Tracking:
+      - Overview:  experiment_tracking/overview.md
+      - Logging Experiments:  experiment_tracking/logging.md
+  - Deployment:
+      - Local Deployment: deployment/local.md
+      - Cloud Deployment: deployment/cloud.md
+  - Troubleshooting: troubleshooting.md
+  - References: references.md

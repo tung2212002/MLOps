@@ -1,0 +1,72 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+        - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+        - AWS_REGION=${AWS_REGION}
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - DVC_REMOTE_URL=${DVC_REMOTE_URL}
+    volumes:
+      - .:/app
+    depends_on:
+      - mlflow
+    ports:
+      - "8005:8005"
+    command: ["python", "main.py"]
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+        - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+        - AWS_REGION=${AWS_REGION}
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+    volumes:
+      - .:/app
+    depends_on:
+      - mlflow
+    command: ["pytest", "-v", "/app/tests/test_prediction.py"]
+
+  mlflow_server:
+    restart: always
+    build:
+      context: ./mlflow
+      dockerfile: Dockerfile-mlflow
+    image: mlflow_server
+    container_name: mlflow_server
+    ports:
+      - "5051:5050"
+    volumes:
+      - /tmp/mlopsdb:/tmp/mlopsdb
+      - /tmp/mlopsartifacts:/tmp/mlopsartifacts
+      - /tmp/store:/tmp/store
+
+  mlflow:
+    image: ubuntu/mlflow:2.1.1_1.0-22.04
+    container_name: tracker_mlflow
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_DEFAULT_REGION=${AWS_REGION}
+      - MLFLOW_TRACKING_URI=${MLFLOW_TRACKING_URI}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - S3_ARTIFACT_ROOT=${S3_ARTIFACT_ROOT}
+    entrypoint: mlflow server --backend-store-uri mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE} --default-artifact-root ${S3_ARTIFACT_ROOT} -h 0.0.0.0
