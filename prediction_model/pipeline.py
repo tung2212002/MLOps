@@ -10,5 +10,5 @@ preprocessing_pipeline = Pipeline([
     ('MeanImputation', pp.MeanImputer(variables=['Adult Mortality', 'Alcohol', 'Hepatitis B', ' BMI ', 'Total expenditure', 'GDP', ' thinness  1-19 years', ' thinness 5-9 years', 'Income composition of resources', 'Schooling'])),
     ('ModeImputation', pp.ModeImputer(variables=['Status'])),
     ('DropColumns', pp.DropColumns(variables_to_drop=['Country'])),
-    ('ScaleFeatures', pp.MinMaxScaler())
+    ('ScaleFeatures', MinMaxScaler())
 ])
