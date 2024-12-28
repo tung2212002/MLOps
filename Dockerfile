@@ -34,17 +34,12 @@ ENV PYTHONPATH="${PYTHONPATH}:/app"
 # Copy all files
 COPY . .
 
-# RUN touch prediction_model/__init__.py && \
 RUN    dvc remote modify mlopsremote access_key_id ${AWS_ACCESS_KEY_ID} && \
     dvc remote modify mlopsremote secret_access_key ${AWS_SECRET_ACCESS_KEY} && \
     dvc remote modify mlopsremote region ${AWS_DEFAULT_REGION} && \
     dvc pull -v --force && \
     python prediction_model/training_pipeline.py
 
-    # entrypoint: mlflow server --backend-store-uri mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE} --default-artifact-root=s3://mlflow/ --host=0.0.0.0 --port=5000
-# CMD ["mlflow", "server", "--backend-store-uri", "mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}", "--default-artifact-root", "s3://mlflow/", "--host", "0.0.0.0", "--port", "5000"]
-
-# CMD ["uvicorn", "server.api:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 # && \
 #     pytest -v /app/tests/test_prediction.py && \
 #     pytest --junitxml=/app/tests/test-results.xml /app/tests/test_prediction.py
