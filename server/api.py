@@ -12,7 +12,7 @@ from datetime import datetime
 from prometheus_fastapi_instrumentator import Instrumentator
 
 from prediction_model.predict import generate_predictions, generate_predictions_batch
-from config import TRACKING_URI, API_PREFIX, ENABLE_OPENAPI, CORS_ALLOW_ORIGIN, CORS_ALLOW_CREDENTIALS, CORS_ALLOW_METHODS, CORS_ALLOW_HEADERS
+from server.config import TRACKING_URI, API_PREFIX, ENABLE_OPENAPI, CORS_ALLOW_ORIGIN, CORS_ALLOW_CREDENTIALS, CORS_ALLOW_METHODS, CORS_ALLOW_HEADERS
 from prediction_model.config import config
 
 
@@ -61,8 +61,8 @@ Instrumentator().instrument(app).expose(app)
 
 class CountryData(BaseModel):
     Year: int
-    Status: str
-    Life_expectancy: float
+    Status: str = 1
+    Life_expectancy: float = 0.0
     Adult_Mortality: float
     Infant_deaths: float
     Alcohol: float
@@ -91,51 +91,9 @@ def index():
 @app.post("/prediction_api")
 def predict(country_data: CountryData):
     data = country_data.model_dump()
-    prediction = generate_predictions([data])["prediction"][0]
-    return {"prediction": prediction}
-
-
-@app.post("/prediction_ui")
-def predict_gui(Year: int, Status: str, Life_expectancy: float, Adult_Mortality: float, Infant_deaths: float,
-                Alcohol: float, Percentage_expenditure: float, Hepatitis_B: float, Measles: float, BMI: float,
-                Under_five_deaths: float, Polio: float, Total_expenditure: float, Diphtheria: float, HIV_AIDS: float,
-                GDP: float, Population: int, Thinness_1_19_years: float, Thinness_5_9_years: float,
-                Income_composition_of_resources: float, Schooling: float):
-
-    input_data = [Year, Status, Life_expectancy, Adult_Mortality, Infant_deaths, Alcohol, Percentage_expenditure,
-                  Hepatitis_B, Measles, BMI, Under_five_deaths, Polio, Total_expenditure, Diphtheria, HIV_AIDS, GDP,
-                  Population, Thinness_1_19_years, Thinness_5_9_years, Income_composition_of_resources, Schooling]
-
-    cols = ['Year', 'Status', 'Life_expectancy', 'Adult_Mortality', 'Infant_deaths', 'Alcohol', 
-            'Percentage_expenditure', 'Hepatitis_B', 'Measles', 'BMI', 'Under_five_deaths', 'Polio', 
-            'Total_expenditure', 'Diphtheria', 'HIV_AIDS', 'GDP', 'Population', 'Thinness_1_19_years', 
-            'Thinness_5_9_years', 'Income_composition_of_resources', 'Schooling']
-    
-    data_dict = dict(zip(cols, input_data))
-    prediction = generate_predictions([data_dict])["prediction"][0]
-    return {"prediction": prediction}
-
-
-@app.post("/batch_prediction")
-async def batch_predict(file: UploadFile = File(...)):
-    content = await file.read()
-    df = pd.read_csv(io.BytesIO(content), index_col=False)
-    
-    # Ensure the CSV file contains the required features
-    required_columns = ['Year', 'Status', 'Life_expectancy', 'Adult_Mortality', 'Infant_deaths', 'Alcohol', 
-                        'Percentage_expenditure', 'Hepatitis_B', 'Measles', 'BMI', 'Under_five_deaths', 'Polio', 
-                        'Total_expenditure', 'Diphtheria', 'HIV_AIDS', 'GDP', 'Population', 'Thinness_1_19_years', 
-                        'Thinness_5_9_years', 'Income_composition_of_resources', 'Schooling']
-    if not all(column in df.columns for column in required_columns):
-        return {"error": "CSV file does not contain the required columns."}
-
-    predictions = generate_predictions_batch(df)["prediction"]
-    df['Prediction'] = predictions
-    result = df.to_csv(index=False)
-    
-    s3_key = upload_to_s3(result.encode('utf-8'), file.filename)
-
-    return StreamingResponse(io.BytesIO(result.encode('utf-8')), media_type="text/csv", headers={"Content-Disposition": "attachment; filename=predictions.csv"})
+    # prediction = generate_predictions([data])["prediction"][0]
+    # return {"prediction": prediction}
+    return generate_predictions([data])
 
 
 if __name__ == "__main__":

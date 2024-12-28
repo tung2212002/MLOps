@@ -1,7 +1,7 @@
 import os
 import pathlib
 
-DEBUG = os.getenv('DEBUG', 'False') == 'True'  # Biến DEBUG có giá trị True nếu được set là 'True'
+DEBUG = os.getenv('DEBUG', 'False') == 'True' 
 ENABLE_OPENAPI = os.getenv('ENABLE_OPENAPI', 'False') == 'True'
 HOST = os.getenv('HOST', '0.0.0.0')
 PORT = int(os.getenv('PORT', 8000))
@@ -38,7 +38,7 @@ RUN_ID = os.getenv('RUN_ID', '')
 # Logging information
 LOG_LEVEL = int(os.getenv('LOG_LEVEL', 10))
 
-TRACKING_URI="http://ec2-54-173-194-157.compute-1.amazonaws.com:5001"
+TRACKING_URI="http://ec2-54-173-194-157.compute-1.amazonaws.com:5000"
 
 EXPERIMENT_NAME="life_expectancy_prediction_model"
 

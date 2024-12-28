@@ -14,8 +14,8 @@ COPY requirements.txt ./
 
 # Install dependencies
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt && \
-    pip install dvc[s3]
+    pip install --timeout=1200 --no-cache-dir -r requirements.txt &&\
+    pip install --timeout=1200 dvc[s3]
 
 ARG AWS_ACCESS_KEY_ID
 ARG AWS_SECRET_ACCESS_KEY
@@ -36,7 +36,6 @@ RUN    dvc remote modify mlopsremote access_key_id ${AWS_ACCESS_KEY_ID} && \
     dvc remote modify mlopsremote region ${AWS_DEFAULT_REGION} && \
     dvc pull -v --force && \
     python prediction_model/training_pipeline.py
-
-# && \
-#     pytest -v /app/tests/test_prediction.py && \
-#     pytest --junitxml=/app/tests/test-results.xml /app/tests/test_prediction.py
+    # && \
+    #     pytest -v /app/tests/test_prediction.py && \
+    #     pytest --junitxml=/app/tests/test-results.xml /app/tests/test_prediction.py

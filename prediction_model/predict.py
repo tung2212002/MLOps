@@ -22,7 +22,7 @@ def generate_predictions(data_input):
     best_run_id = best_run['run_id']
     best_model = 'runs:/' + best_run_id + config.MODEL_NAME
     life_expectancy_model = mlflow.sklearn.load_model(best_model)
-    
+
     # Make predictions using the loaded model
     prediction = life_expectancy_model.predict(data)
     

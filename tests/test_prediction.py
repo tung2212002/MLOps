@@ -1,29 +1,37 @@
 import pytest
-from prediction_model.config import config
-from prediction_model.processing.data_handling import load_dataset
-from prediction_model.predict import generate_predictions
 import mlflow
+import pandas as pd
+from prediction_model.config import config
+from prediction_model.predict import generate_predictions
+from prediction_model.processing.data_handling import load_dataset
 
-# output from predict script not null
-# output from predict script is str data type
-# the output is Y for an example data
-
+# Set the MLflow tracking URI
 mlflow.set_tracking_uri(config.TRACKING_URI)
 
 @pytest.fixture
-def single_prediction():
-    test_dataset = load_dataset(config.TEST_FILE)
-    single_row = test_dataset[config.FEATURES][:1]
-    result = generate_predictions(single_row)
+def random_data_point():
+    life_expectancy_df = load_dataset(config.DATASETS_FILE)
+    
+    single_row = life_expectancy_df.sample(n=1, random_state=42)  # Lấy một dòng ngẫu nhiên
+    return single_row
+
+@pytest.fixture
+def single_prediction(random_data_point):
+    result = generate_predictions(random_data_point)
     return result
 
-def test_single_pred_not_none(single_prediction): # output is not none
+def test_single_pred_not_none(single_prediction):
     assert single_prediction is not None
 
-def test_single_pred_str_type(single_prediction): # data type is string
-    assert isinstance(single_prediction.get('prediction')[0],str)
+def test_single_pred_numeric_type(single_prediction):
+    prediction = single_prediction.get('predictions')[0]
+    assert isinstance(prediction, (float, int))
 
-def test_single_pred_validate(single_prediction): # check the output is Y
-    assert single_prediction.get('prediction')[0] == 'Y'
+def test_single_pred_value_range(single_prediction):
+    prediction = single_prediction.get('predictions')[0]
+    assert 0 <= prediction <= 150
 
-
+def test_single_pred_valid_result(single_prediction):
+    prediction = single_prediction.get('predictions')[0]
+    assert prediction is not None
+    assert not pd.isna(prediction)
