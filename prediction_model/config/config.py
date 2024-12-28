@@ -11,50 +11,62 @@ PACKAGE_ROOT = os.path.dirname(current_directory) #parent directory of current d
 
 DATAPATH = os.path.join(PACKAGE_ROOT,"datasets")
 
-TRAIN_FILE = 'train.csv'
-TEST_FILE = 'test.csv'
+# TRAIN_FILE = 'train.csv'
+# TEST_FILE = 'test.csv'
+DATASETS_FILE = "LifeExpectancyData.csv"
 
-TARGET = 'Loan_Status'
 
-#Final features used in the model
-FEATURES = ['Gender', 'Married', 'Dependents', 'Education',
-       'Self_Employed', 'ApplicantIncome', 'CoapplicantIncome', 'LoanAmount',
-       'Loan_Amount_Term', 'Credit_History', 'Property_Area']
+# TARGET = 'Loan_Status'
+TARGET = 'Life expectancy '
 
-NUM_FEATURES = ['ApplicantIncome', 'LoanAmount', 'Loan_Amount_Term']
+FEATURES = [
+    "Adult Mortality",
+    "Alcohol",
+    " BMI ",
+    "Schooling"
+]
 
-CAT_FEATURES = ['Gender',
- 'Married',
- 'Dependents',
- 'Education',
- 'Self_Employed',
- 'Credit_History',
- 'Property_Area']
+NUM_FEATURES = [
+    "Adult Mortality",
+    "Alcohol",
+    " BMI ",
+    "Schooling"
+]
 
-# in our case it is same as Categorical features
-FEATURES_TO_ENCODE = ['Gender',
- 'Married',
- 'Dependents',
- 'Education',
- 'Self_Employed',
- 'Credit_History',
- 'Property_Area']
+CAT_FEATURES = [
+]
 
-FEATURE_TO_MODIFY = ['ApplicantIncome']
-FEATURE_TO_ADD = 'CoapplicantIncome'
+# Các cột cần bỏ (nếu có)
+DROP_FEATURES = [
+    'Country',
+]
 
-DROP_FEATURES = ['CoapplicantIncome']
+# Các cột cần áp dụng mã hóa (encoding)
+FEATURES_TO_ENCODE = CAT_FEATURES
 
-LOG_FEATURES = ['ApplicantIncome', 'LoanAmount'] # taking log of numerical columns
+# Các cột cần áp dụng log transformation
+LOG_FEATURES = [
+    "Adult Mortality",
+    "infant deaths",
+    "percentage expenditure",
+    "Measles ",
+    "under-five deaths ",
+    "GDP",
+    "Population"
+]
 
-S3_BUCKET = "loanprediction"
+# Các cột cần xử lý domain-specific
+FEATURE_TO_MODIFY = []  # Nếu cần thực hiện phép toán trên các cột
+FEATURE_TO_ADD = []     # Các cột được thêm để phục vụ phép toán
+
+S3_BUCKET = "life-expectancy-prediction-model"
 
 FOLDER="datadrift"
 
-TRACKING_URI="http://localhost:5000/"
+TRACKING_URI="http://ec2-54-173-194-157.compute-1.amazonaws.com:5001"
 
 
-EXPERIMENT_NAME="loan_prediction_model"
+EXPERIMENT_NAME="life_expectancy_prediction_model"
 
-MODEL_NAME="/Loanprediction-model"
+MODEL_NAME="/LifeExpectancy-prediction-model"
 

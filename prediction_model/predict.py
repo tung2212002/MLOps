@@ -3,8 +3,6 @@ import numpy as np
 from prediction_model.config import config  
 import mlflow
 
-
-
 def generate_predictions(data_input):
     data = pd.DataFrame(data_input)
     experiment_name = config.EXPERIMENT_NAME
@@ -35,10 +33,6 @@ def generate_predictions_batch(data_input):
     output = np.where(prediction==1,'Y','N')
     result = {"prediction":output}
     return result
-
-
-    
-
 
 if __name__=='__main__':
     generate_predictions()
