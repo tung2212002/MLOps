@@ -6,6 +6,10 @@ on:
     
 name: MLOps AWS
 
+permissions:
+      id-token: write 
+      contents: read 
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -25,7 +29,8 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
+        aws-region: ${{ secrets.AWS_REGION }}
+        mask-aws-account-id: true
 
     - name: Login to Amazon ECR
       id: login-ecr
