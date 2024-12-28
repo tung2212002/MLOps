@@ -14,10 +14,10 @@ from sklearn.impute import SimpleImputer
 import prediction_model.processing.preprocessing as pp 
 from prediction_model.processing.data_handling import load_dataset
 from prediction_model.config import config
-from server.config import settings
+from server.config import TRACKING_URI
 
 # Set MLflow URI
-mlflow.set_tracking_uri(settings.MLFLOW_TRACKING_URI)
+mlflow.set_tracking_uri(TRACKING_URI)
 
 # Load the dataset
 def get_data(input_file):

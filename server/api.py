@@ -12,7 +12,7 @@ from datetime import datetime
 from prometheus_fastapi_instrumentator import Instrumentator
 
 from prediction_model.predict import generate_predictions,generate_predictions_batch
-from config import settings
+from config import TRACKING_URI, API_PREFIX, ENABLE_OPENAPI, CORS_ALLOW_ORIGIN, CORS_ALLOW_CREDENTIALS, CORS_ALLOW_METHODS, CORS_ALLOW_HEADERS
 from prediction_model.config import config  
 
 
@@ -34,14 +34,14 @@ def upload_to_s3(file_content, filename):
   
     return s3_key 
 
-mlflow.set_tracking_uri(settings.MLFLOW_TRACKING_URI)
+mlflow.set_tracking_uri(TRACKING_URI)
 
 app = FastAPI(
     title="Loan Prediction App using FastAPI - MLOps",
     description = "MLOps",
     version='1.0',
     openapi_url=(
-        f"{settings.API_PREFIX}/openapi.json" if settings.ENABLE_OPENAPI else None
+        f"{API_PREFIX}/openapi.json" if ENABLE_OPENAPI else None
     ),
     redoc_url=None,
     docs_url="/docs",
@@ -49,10 +49,10 @@ app = FastAPI(
 
 app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.CORS_ALLOW_ORIGIN,
-        allow_credentials=settings.CORS_ALLOW_CREDENTIALS,
-        allow_methods=settings.CORS_ALLOW_METHODS,
-        allow_headers=settings.CORS_ALLOW_HEADERS,
+        allow_origins=CORS_ALLOW_ORIGIN,
+        allow_credentials=CORS_ALLOW_CREDENTIALS,
+        allow_methods=CORS_ALLOW_METHODS,
+        allow_headers=CORS_ALLOW_HEADERS,
     )
 
 
