@@ -12,9 +12,10 @@ import prediction_model.processing.preprocessing as pp
 import prediction_model.pipeline as pipe
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
+from server.config import settings
 
 
-mlflow.set_tracking_uri("http://127.0.0.1:5000")
+mlflow.set_tracking_uri(settings.MLFLOW_TRACKING_URI)
 
 # mlflow.set_tracking_uri(config.TRACKING_URI)
 
@@ -74,7 +75,7 @@ def objective(params):
     )
     
    
-    # Fit the pipeline
+#     # Fit the pipeline
     mlflow.xgboost.autolog()
     mlflow.set_experiment("loan_prediction_model")
     with mlflow.start_run(nested=True):
@@ -102,12 +103,20 @@ def objective(params):
     return {'loss': 1-f1, 'status': STATUS_OK}
     
 
-
 trials = Trials()
+best_params = fmin(
+    fn=objective,
+    space=search_space,
+    algo=tpe.suggest,
+    max_evals=5,
+    trials=trials
+)
 
-best_params = fmin(fn=objective, space=search_space, algo=tpe.suggest, max_evals=5, trials=trials)
+# trials = Trials()
 
-print("Best hyperparameters:", best_params)
+# best_params = fmin(fn=objective, space=search_space, algo=tpe.suggest, max_evals=5, trials=trials)
+
+# print("Best hyperparameters:", best_params)
 
 
 
