@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import yaml
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 import mlflow
@@ -10,7 +11,6 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler, LabelEncoder, StandardScaler
 from sklearn.impute import SimpleImputer
 
-# import prediction_model.pipeline as preprocessing_pipeline
 from prediction_model.processing.data_handling import load_dataset
 from prediction_model.config import config
 
@@ -21,6 +21,13 @@ mlflow.set_tracking_uri(config.TRACKING_URI)
 def get_data(input_file):
     data = load_dataset(input_file)
     return data
+
+def load_config(config_file):
+    with open(config_file, 'r') as file:
+        config = yaml.safe_load(file)
+    return config
+
+config_params = load_config(config.CONFIG_FILE)
 
 life_expectancy_df = get_data(config.DATASETS_FILE)
 life_expectancy_df = life_expectancy_df.drop(columns = config.DROP_FEATURES)
@@ -40,14 +47,14 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, rando
 
 # Define the search space for hyperparameter tuning
 search_space = {
-    'max_depth': hp.choice('max_depth', np.arange(3, 10, dtype=int)),
-    'learning_rate': hp.uniform('learning_rate', 0.01, 0.3),
-    'n_estimators': hp.choice('n_estimators', np.arange(50, 300, 50, dtype=int)),
-    'subsample': hp.uniform('subsample', 0.5, 1.0),
-    'colsample_bytree': hp.uniform('colsample_bytree', 0.5, 1.0),
-    'gamma': hp.uniform('gamma', 0, 5),
-    'reg_alpha': hp.uniform('reg_alpha', 0, 1),
-    'reg_lambda': hp.uniform('reg_lambda', 0, 1)
+    'max_depth': hp.choice('max_depth', np.array(config_params['search_space']['max_depth'], dtype=int)),
+    'learning_rate': hp.uniform('learning_rate', config_params['search_space']['learning_rate']['min'], config_params['search_space']['learning_rate']['max']),
+    'n_estimators': hp.choice('n_estimators', np.array(config_params['search_space']['n_estimators'], dtype=int)),
+    'subsample': hp.uniform('subsample', config_params['search_space']['subsample']['min'], config_params['search_space']['subsample']['max']),
+    'colsample_bytree': hp.uniform('colsample_bytree', config_params['search_space']['colsample_bytree']['min'], config_params['search_space']['colsample_bytree']['max']),
+    'gamma': hp.uniform('gamma', config_params['search_space']['gamma']['min'], config_params['search_space']['gamma']['max']),
+    'reg_alpha': hp.uniform('reg_alpha', config_params['search_space']['reg_alpha']['min'], config_params['search_space']['reg_alpha']['max']),
+    'reg_lambda': hp.uniform('reg_lambda', config_params['search_space']['reg_lambda']['min'], config_params['search_space']['reg_lambda']['max'])
 }
 
 # Objective function for hyperparameter tuning

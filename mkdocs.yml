@@ -1,13 +1,19 @@
 site_name: "MLOps Project Documentation"
-theme: readthedocs
+theme: 
+  name: readthedocs
+repo_url: https://github.com/tung2212002/MLOpsTest.git
+
 nav:
   - Home: index.md
   - Technologies:
-      - FastAPI: technologies/fastapi.md 
+      - FastAPI: technologies/fastapi.md
       - MLflow: technologies/mlflow.md
       - DVC: technologies/dvc.md
       - Docker: technologies/docker.md
       - AWS S3: technologies/s3.md
+      - AWS ECR: technologies/ecr.md
+      - AWS EKS: technologies/eks.md
+      - MySQL: technologies/mysql.md
   - Setup:
       - Overview: setup/overview.md
       - Installation: setup/installation.md
@@ -20,10 +26,11 @@ nav:
       - Overview: api/overview.md
       - Endpoints: api/endpoints.md
   - Experiment Tracking:
-      - Overview:  experiment_tracking/overview.md
-      - Logging Experiments:  experiment_tracking/logging.md
+      - Overview: experiment_tracking/overview.md
+      - Logging Experiments: experiment_tracking/logging.md
   - Deployment:
       - Local Deployment: deployment/local.md
       - Cloud Deployment: deployment/cloud.md
+      - EKS Deployment: deployment/eks.md
   - Troubleshooting: troubleshooting.md
   - References: references.md

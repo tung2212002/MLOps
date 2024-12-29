@@ -10,30 +10,11 @@ import io
 import boto3
 from datetime import datetime
 from prometheus_fastapi_instrumentator import Instrumentator
+import json
 
-from prediction_model.predict import generate_predictions, generate_predictions_batch
-from server.config import TRACKING_URI, API_PREFIX, ENABLE_OPENAPI, CORS_ALLOW_ORIGIN, CORS_ALLOW_CREDENTIALS, CORS_ALLOW_METHODS, CORS_ALLOW_HEADERS
+from prediction_model.predict import generate_predictions
+from server.config import TRACKING_URI, API_PREFIX, CORS_ALLOW_ORIGIN, CORS_ALLOW_CREDENTIALS, CORS_ALLOW_METHODS, CORS_ALLOW_HEADERS
 from prediction_model.config import config
-
-
-def upload_to_s3(file_content, filename):
-    s3 = boto3.client('s3')
-    
-    current_date = datetime.now().strftime("%Y-%m-%d")
-    if filename.endswith('.csv'):
-        filename = filename[:-4]
-        
-    current_datetime = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
-    folder_path = f"{config.FOLDER}/{current_date}"
- 
-    filename_with_datetime = f"{filename}_{current_datetime}.csv"
-    
-    s3_key = f"{folder_path}/{filename_with_datetime}"
-
-    response = s3.put_object(Bucket=config.S3_BUCKET, Key=s3_key, Body=file_content)
-  
-    return s3_key 
-
 
 mlflow.set_tracking_uri(TRACKING_URI)
 
@@ -41,11 +22,6 @@ app = FastAPI(
     title="Health Data Prediction App using FastAPI - MLOps",
     description="Predicting health and demographic statistics",
     version='1.0',
-    openapi_url=(
-        f"{API_PREFIX}/openapi.json" if ENABLE_OPENAPI else None
-    ),
-    redoc_url=None,
-    docs_url="/docs",
 )
 
 app.add_middleware(
@@ -61,7 +37,7 @@ Instrumentator().instrument(app).expose(app)
 
 class CountryData(BaseModel):
     Year: int
-    Status: str = 1
+    Status: int = 1
     Life_expectancy: float = 0.0
     Adult_Mortality: float
     Infant_deaths: float
@@ -85,15 +61,14 @@ class CountryData(BaseModel):
 
 @app.get("/")
 def index():
-    return {"message": "Welcome to the MLOps Health Data Prediction App"}
+    return {"message": "Welcome to the MLOps Health Data Prediction App."}
 
 
 @app.post("/prediction_api")
 def predict(country_data: CountryData):
     data = country_data.model_dump()
-    # prediction = generate_predictions([data])["prediction"][0]
-    # return {"prediction": prediction}
-    return generate_predictions([data])
+    prediction = generate_predictions([data])
+    return {"predict": json.dumps(prediction)}
 
 
 if __name__ == "__main__":

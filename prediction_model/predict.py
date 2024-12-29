@@ -27,34 +27,8 @@ def generate_predictions(data_input):
     prediction = life_expectancy_model.predict(data)
     
     # Return the predictions in the required format (e.g., for regression predictions)
-    result = {"predictions": prediction.tolist()}
-    return result
-
-# Function to handle batch predictions (from a CSV file)
-def generate_predictions_batch(data_input):
-    # Convert the input data into a DataFrame
-    data = pd.DataFrame(data_input)
-    
-    # Get the experiment name from the config
-    experiment_name = config.EXPERIMENT_NAME
-    
-    # Fetch the experiment and get the best run based on metrics
-    experiment = mlflow.get_experiment_by_name(experiment_name)
-    experiment_id = experiment.experiment_id
-    runs_df = mlflow.search_runs(experiment_ids=experiment_id, order_by=['metrics.r2_score DESC'])
-    
-    # Get the best run (based on R2 score) and load the best model
-    best_run = runs_df.iloc[0]
-    best_run_id = best_run['run_id']
-    best_model = 'runs:/' + best_run_id + config.MODEL_NAME
-    life_expectancy_model = mlflow.sklearn.load_model(best_model)
-    
-    # Make predictions using the loaded model
-    prediction = life_expectancy_model.predict(data)
-    
-    # Return the predictions in the required format (e.g., for regression predictions)
-    result = {"predictions": prediction.tolist()}
-    return result
+    result = prediction.tolist()
+    return result[0]
 
 if __name__ == '__main__':
     # This would be an example of how the predictions function could be called

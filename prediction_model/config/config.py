@@ -19,7 +19,7 @@ DROP_FEATURES = [
     'Country',
 ]
 
-S3_BUCKET = "life-expectancy-prediction-model"
+S3_BUCKET = "mlops-it5414-project"
 
 FOLDER="datadrift"
 
@@ -30,3 +30,4 @@ EXPERIMENT_NAME="life_expectancy_prediction_model"
 
 MODEL_NAME="/LifeExpectancy-prediction-model"
 
+CONFIG_FILE="/app/prediction_model/config.yaml"

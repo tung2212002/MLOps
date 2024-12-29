@@ -52,8 +52,20 @@
                   <li class="toctree-l1"><a class="reference internal" href="../dvc/">DVC</a>
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="#">Docker</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#key-features">Key Features:</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#example">Example:</a>
+    </li>
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../s3/">AWS S3</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ecr/">AWS ECR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../eks.md">AWS EKS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../mysql.md">MySQL</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Setup</span></p>
@@ -94,6 +106,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../deployment/cloud/">Cloud Deployment</a>
                   </li>
+                  <li class="toctree-l1"><a class="" href="../../deployment/eks.md">EKS Deployment</a>
+                  </li>
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/">Troubleshooting</a>
@@ -120,6 +134,7 @@
           <li class="breadcrumb-item">Technologies</li>
       <li class="breadcrumb-item active">Docker</li>
     <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/tung2212002/MLOpsTest.git/edit/master/docs/technologies/docker.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -127,7 +142,22 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                
+                <h1 id="docker">Docker</h1>
+<p><strong>Docker</strong> is a platform used to develop, ship, and run applications inside lightweight containers. Containers are isolated environments that package all dependencies needed to run a program, making it easy to deploy and scale applications.</p>
+<p>In our MLOps pipeline, Docker is used to containerize the entire model training and deployment environment, ensuring consistency across different stages of development and production.</p>
+<h3 id="key-features">Key Features:</h3>
+<ul>
+<li><strong>Isolation</strong>: Keeps your application and its dependencies in separate containers.</li>
+<li><strong>Portability</strong>: Run containers anywhere (locally, in the cloud, etc.).</li>
+<li><strong>Scalability</strong>: Easily scale applications using Docker orchestration tools like Kubernetes.</li>
+</ul>
+<p>We use Docker to create a container image for our model API and deploy it in the cloud.</p>
+<h3 id="example">Example:</h3>
+<p>```bash</p>
+<h1 id="build-docker-image">Build Docker image</h1>
+<p>docker build -t my_model_api .</p>
+<h1 id="run-the-container-locally">Run the container locally</h1>
+<p>docker run -p 8000:8000 my_model_api</p>
               
             </div>
           </div><footer>
@@ -154,6 +184,10 @@
 
   <div class="rst-versions" role="note" aria-label="Versions">
   <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/tung2212002/MLOpsTest.git" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
     
     
       <span><a href="../dvc/" style="color: #fcfcfc">&laquo; Previous</a></span>

@@ -48,12 +48,24 @@
                   <li class="toctree-l1"><a class="reference internal" href="../fastapi/">FastAPI</a>
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="#">MLflow</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#key-features">Key Features:</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#example">Example:</a>
+    </li>
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../dvc/">DVC</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../docker/">Docker</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../s3/">AWS S3</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ecr/">AWS ECR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../eks.md">AWS EKS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../mysql.md">MySQL</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Setup</span></p>
@@ -94,6 +106,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../deployment/cloud/">Cloud Deployment</a>
                   </li>
+                  <li class="toctree-l1"><a class="" href="../../deployment/eks.md">EKS Deployment</a>
+                  </li>
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/">Troubleshooting</a>
@@ -120,6 +134,7 @@
           <li class="breadcrumb-item">Technologies</li>
       <li class="breadcrumb-item active">MLflow</li>
     <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/tung2212002/MLOpsTest.git/edit/master/docs/technologies/mlflow.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -127,7 +142,29 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                
+                <h1 id="mlflow">MLflow</h1>
+<p><strong>MLflow</strong> is an open-source platform to manage the end-to-end machine learning lifecycle. It helps with tracking experiments, packaging code, and deploying models.</p>
+<p>In our system, MLflow is used to track experiments, log model metrics, and store model artifacts. This allows us to efficiently manage and monitor our models as they evolve over time.</p>
+<h3 id="key-features">Key Features:</h3>
+<ul>
+<li><strong>Experiment Tracking</strong>: Logs metrics, parameters, and models for each experiment.</li>
+<li><strong>Model Management</strong>: Supports storing and versioning machine learning models.</li>
+<li><strong>Model Deployment</strong>: Facilitates model deployment using REST API or integration with other platforms.</li>
+</ul>
+<p>We use MLflow to log hyperparameters, metrics, and the models during training. It also helps in comparing different versions of the model to select the best one for deployment.</p>
+<h3 id="example">Example:</h3>
+<p>```python
+import mlflow
+import mlflow.sklearn</p>
+<p>with mlflow.start_run():
+    # Train the model
+    model.fit(X_train, y_train)</p>
+<pre><code># Log model
+mlflow.sklearn.log_model(model, "model")
+
+# Log metrics
+mlflow.log_metric("accuracy", accuracy)
+</code></pre>
               
             </div>
           </div><footer>
@@ -154,6 +191,10 @@
 
   <div class="rst-versions" role="note" aria-label="Versions">
   <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/tung2212002/MLOpsTest.git" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
     
     
       <span><a href="../fastapi/" style="color: #fcfcfc">&laquo; Previous</a></span>
