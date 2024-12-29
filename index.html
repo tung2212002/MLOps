@@ -69,6 +69,12 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="technologies/s3/">AWS S3</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="technologies/ecr/">AWS ECR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="technologies/eks.md">AWS EKS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="technologies/mysql.md">MySQL</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">Setup</span></p>
               <ul>
@@ -108,6 +114,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="deployment/cloud/">Cloud Deployment</a>
                   </li>
+                  <li class="toctree-l1"><a class="" href="deployment/eks.md">EKS Deployment</a>
+                  </li>
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="troubleshooting/">Troubleshooting</a>
@@ -145,33 +153,67 @@
 <h2 id="introduction">Introduction</h2>
 <h3 id="features">Features</h3>
 <ul>
-<li><strong>End-to-End Pipeline</strong>: Automates data preprocessing, model training, evaluation, and deployment.</li>
-<li><strong>Experiment Tracking</strong>: Tracks experiments and manages model versions with MLflow.</li>
-<li><strong>Data Versioning</strong>: Ensures reproducibility with DVC.</li>
-<li><strong>API Serving</strong>: Provides real-time predictions via FastAPI.</li>
-<li><strong>Containerization</strong>: Simplifies deployment with Docker.</li>
+<li>
+<p><strong>End-to-End Pipeline</strong>: This project automates the entire machine learning lifecycle, from data preprocessing, model training, evaluation, and deployment. The pipeline ensures smooth transitions between each phase of the workflow, reducing manual intervention and increasing efficiency.</p>
+</li>
+<li>
+<p><strong>Experiment Tracking</strong>: With <strong>MLflow</strong>, all experiments are tracked and managed, including model training runs, hyperparameters, and performance metrics. This allows for easy comparison of different models and ensures reproducibility across experiments.</p>
+</li>
+<li>
+<p><strong>Data Versioning</strong>: <strong>DVC (Data Version Control)</strong> is used to track data versions and ensure reproducibility. It integrates with cloud storage (like AWS S3) for efficient data management, even when datasets are large and constantly evolving.</p>
+</li>
+<li>
+<p><strong>API Serving</strong>: <strong>FastAPI</strong> is used for serving real-time predictions via an API. This makes it easy to expose the model as a web service for integration into other applications or client-facing systems.</p>
+</li>
+<li>
+<p><strong>Containerization</strong>: The project is containerized using <strong>Docker</strong>, simplifying deployment and ensuring consistency across different environments, whether local, cloud, or production.</p>
+</li>
 </ul>
 <h3 id="technologies-used">Technologies Used</h3>
-<p>This project leverages the following technologies:</p>
+<p>This project utilizes the following technologies to streamline the MLOps workflow:</p>
 <ul>
-<li><strong>Python</strong>: Core programming language.</li>
-<li><strong>FastAPI</strong>: For serving APIs.</li>
-<li><strong>MLflow</strong>: For tracking experiments and managing models.</li>
-<li><strong>DVC</strong>: For data and model versioning.</li>
-<li><strong>Docker</strong>: For containerization and portability.</li>
-<li><strong>Cloud Services</strong>: For scaling deployments.</li>
+<li>
+<p><strong>Python</strong>: The primary programming language for model training, data processing, and API development.</p>
+</li>
+<li>
+<p><strong>FastAPI</strong>: A modern, fast (high-performance) web framework used for building APIs. It serves as the interface for making real-time predictions with the model.</p>
+</li>
+<li>
+<p><strong>MLflow</strong>: A platform to manage the machine learning lifecycle, including experiment tracking, model versioning, and deployment. It helps ensure models are reproducible and can be easily compared.</p>
+</li>
+<li>
+<p><strong>DVC (Data Version Control)</strong>: A tool for managing versions of datasets, models, and other files. DVC integrates with cloud storage (e.g., AWS S3) to store datasets and tracks changes to data and models.</p>
+</li>
+<li>
+<p><strong>Docker</strong>: Used to containerize the entire application, including the model, code, and dependencies. This ensures consistent deployment across various environments (local, cloud, or production).</p>
+</li>
+<li>
+<p><strong>Cloud Services (AWS)</strong>: For scalable storage (AWS S3), compute resources (EC2, EKS), and CI/CD infrastructure (via <strong>GitHub Actions</strong>). AWS provides the flexibility and scalability needed for model deployment and training in the cloud.</p>
+</li>
 </ul>
 <h3 id="how-to-use-this-documentation">How to Use this Documentation</h3>
-<p>Navigate through the sidebar to explore:</p>
+<p>Navigate through the sections in the sidebar to explore the documentation in detail:</p>
 <ul>
-<li><strong>Setup</strong>: Step-by-step installation and configuration.</li>
-<li><strong>Pipeline</strong>: Details about the data and model pipeline.</li>
-<li><strong>API Guide</strong>: Instructions for interacting with the API.</li>
-<li><strong>Deployment</strong>: How to deploy the project locally or in the cloud.</li>
-<li><strong>Troubleshooting</strong>: Solutions to common issues.</li>
+<li>
+<p><strong>Setup</strong>: This section contains step-by-step instructions for setting up the environment, installing required dependencies, and configuring cloud services like AWS.</p>
+</li>
+<li>
+<p><strong>Pipeline</strong>: Learn about the end-to-end data pipeline, including data preprocessing, model training, evaluation, and deployment. This section describes how <strong>DVC</strong>, <strong>MLflow</strong>, and <strong>FastAPI</strong> work together to create a seamless workflow.</p>
+</li>
+<li>
+<p><strong>API Guide</strong>: Instructions for interacting with the <strong>FastAPI</strong> endpoint. This includes information on sending requests, what parameters to provide, and how to interpret the responses.</p>
+</li>
+<li>
+<p><strong>Deployment</strong>: Step-by-step guidance for deploying the project locally or to the cloud (AWS). This includes how to use <strong>Docker</strong> for containerization, deploy models on AWS EC2/EKS, and set up continuous integration and continuous deployment (CI/CD) using <strong>GitHub Actions</strong>.</p>
+</li>
+<li>
+<p><strong>Troubleshooting</strong>: Solutions for common issues encountered during setup, training, or deployment, along with troubleshooting tips and techniques.</p>
+</li>
 </ul>
 <h3 id="getting-started">Getting Started</h3>
-<p>Begin by reading the <a href="setup/overview/">Setup</a> section to configure the environment and dependencies for the project.</p>
+<p>To begin, follow the instructions in the <a href="setup/overview/">Setup</a> section to configure your environment and install all necessary dependencies. Once your environment is ready, proceed to the <strong>Pipeline</strong> and <strong>Deployment</strong> sections to understand how to run the end-to-end workflow.</p>
+<hr />
+<p>This version is designed to offer a more comprehensive overview of your MLOps workflow, focusing on the integration and automation aspects, and providing users with clear instructions on how to interact with and deploy the system.</p>
               
             </div>
           </div><footer>
@@ -224,5 +266,5 @@
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2024-12-29 01:09:08.728585+00:00
+Build Date UTC : 2024-12-29 05:06:55.681140+00:00
 -->

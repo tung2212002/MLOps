@@ -54,6 +54,16 @@
                   <li class="toctree-l1"><a class="reference internal" href="../docker/">Docker</a>
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="#">AWS S3</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#key-features">Key Features:</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ecr/">AWS ECR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../eks.md">AWS EKS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../mysql.md">MySQL</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Setup</span></p>
@@ -94,6 +104,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../deployment/cloud/">Cloud Deployment</a>
                   </li>
+                  <li class="toctree-l1"><a class="" href="../../deployment/eks.md">EKS Deployment</a>
+                  </li>
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/">Troubleshooting</a>
@@ -128,13 +140,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                
+                <h1 id="aws-s3-simple-storage-service">AWS S3 (Simple Storage Service)</h1>
+<p><strong>AWS S3</strong> is a scalable cloud storage service offered by Amazon Web Services. It is used to store and retrieve any amount of data at any time.</p>
+<p>In our MLOps pipeline, AWS S3 is used for storing datasets and model artifacts. We integrate S3 with DVC to manage data storage and ensure that the right version of the dataset is used during model training.</p>
+<h3 id="key-features">Key Features:</h3>
+<ul>
+<li><strong>Scalability</strong>: Can store large amounts of data and scale automatically.</li>
+<li><strong>Durability</strong>: Designed for 99.999999999% durability.</li>
+<li><strong>Access Control</strong>: Supports fine-grained access control policies for secure data access.</li>
+</ul>
+<p>S3 is essential for storing the large datasets used in training models and the models themselves after they are trained.</p>
+<p>For more details, visit <a href="https://aws.amazon.com/s3">AWS S3 Official Documentation</a>.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../docker/" class="btn btn-neutral float-left" title="Docker"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../../setup/overview/" class="btn btn-neutral float-right" title="Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../ecr/" class="btn btn-neutral float-right" title="AWS ECR">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -164,7 +186,7 @@
       <span><a href="../docker/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../../setup/overview/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../ecr/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

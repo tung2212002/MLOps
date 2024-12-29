@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Reproducing the Pipeline - MLOps Project Documentation</title>
+    <title>AWS ECR - MLOps Project Documentation</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Reproducing the Pipeline";
-        var mkdocs_page_input_path = "pipeline/reproduce.md";
+        var mkdocs_page_name = "AWS ECR";
+        var mkdocs_page_input_path = "technologies/ecr.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -44,22 +44,28 @@
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">Technologies</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../technologies/fastapi/">FastAPI</a>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../fastapi/">FastAPI</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../technologies/mlflow/">MLflow</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../mlflow/">MLflow</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../technologies/dvc/">DVC</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../dvc/">DVC</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../technologies/docker/">Docker</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../docker/">Docker</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../technologies/s3/">AWS S3</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../s3/">AWS S3</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../technologies/ecr/">AWS ECR</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">AWS ECR</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#key-features">Key Features:</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#example">Example:</a>
+    </li>
+    </ul>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../technologies/eks.md">AWS EKS</a>
+                  <li class="toctree-l1"><a class="" href="../eks.md">AWS EKS</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../../technologies/mysql.md">MySQL</a>
+                  <li class="toctree-l1"><a class="" href="../mysql.md">MySQL</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Setup</span></p>
@@ -72,12 +78,12 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Pipeline</span></p>
-              <ul class="current">
-                  <li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../pipeline/overview/">Overview</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../steps/">Steps</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../pipeline/steps/">Steps</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Reproducing the Pipeline</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../../pipeline/reproduce/">Reproducing the Pipeline</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">API Guide</span></p>
@@ -125,10 +131,10 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">Pipeline</li>
-      <li class="breadcrumb-item active">Reproducing the Pipeline</li>
+          <li class="breadcrumb-item">Technologies</li>
+      <li class="breadcrumb-item active">AWS ECR</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/tung2212002/MLOpsTest.git/edit/master/docs/pipeline/reproduce.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/tung2212002/MLOpsTest.git/edit/master/docs/technologies/ecr.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -136,13 +142,26 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                
+                <h1 id="aws-ecr-elastic-container-registry">AWS ECR (Elastic Container Registry)</h1>
+<p><strong>AWS ECR</strong> is a fully managed Docker container registry that makes it easy to store, manage, and deploy Docker container images. It integrates well with other AWS services like ECS and EKS for containerized application deployment.</p>
+<p>We use ECR in our system to store Docker images of our machine learning models and APIs, which are then deployed in EKS.</p>
+<h3 id="key-features">Key Features:</h3>
+<ul>
+<li><strong>Fully Managed</strong>: No need to manage your own container registry.</li>
+<li><strong>Scalable</strong>: Handles storing and managing any number of images.</li>
+<li><strong>Secure</strong>: Integrated with AWS IAM for secure access control.</li>
+</ul>
+<h3 id="example">Example:</h3>
+<p>```bash</p>
+<h1 id="push-docker-image-to-ecr">Push Docker image to ECR</h1>
+<p>docker tag my_model_api:latest <aws_account_id>.dkr.ecr.<region>.amazonaws.com/my-repo:latest
+docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/my-repo:latest</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../steps/" class="btn btn-neutral float-left" title="Steps"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../../api/overview/" class="btn btn-neutral float-right" title="Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../s3/" class="btn btn-neutral float-left" title="AWS S3"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../setup/overview/" class="btn btn-neutral float-right" title="Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -169,10 +188,10 @@
         </span>
     
     
-      <span><a href="../steps/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../s3/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../../api/overview/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../../setup/overview/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

@@ -46,6 +46,12 @@
               <p class="caption"><span class="caption-text">Technologies</span></p>
               <ul class="current">
                   <li class="toctree-l1 current"><a class="reference internal current" href="#">FastAPI</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#key-features">Key Features:</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#example">Example:</a>
+    </li>
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../mlflow/">MLflow</a>
                   </li>
@@ -54,6 +60,12 @@
                   <li class="toctree-l1"><a class="reference internal" href="../docker/">Docker</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../s3/">AWS S3</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ecr/">AWS ECR</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../eks.md">AWS EKS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../mysql.md">MySQL</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Setup</span></p>
@@ -94,6 +106,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../../deployment/cloud/">Cloud Deployment</a>
                   </li>
+                  <li class="toctree-l1"><a class="" href="../../deployment/eks.md">EKS Deployment</a>
+                  </li>
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../../troubleshooting/">Troubleshooting</a>
@@ -128,7 +142,25 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                
+                <h1 id="fastapi">FastAPI</h1>
+<p><strong>FastAPI</strong> is a modern, fast (high-performance) web framework for building APIs with Python 3.6+ based on standard Python type hints. It is designed to be easy to use and provides automatic interactive API documentation.</p>
+<p>In our MLOps pipeline, FastAPI is used for model deployment, allowing us to serve our machine learning models as web services for real-time predictions. It supports asynchronous operations, making it ideal for high-performance, low-latency applications like ours.</p>
+<h3 id="key-features">Key Features:</h3>
+<ul>
+<li>High performance: One of the fastest Python frameworks available.</li>
+<li>Easy to use: Intuitive interface for building APIs with minimal code.</li>
+<li>Automatic validation and serialization of inputs/outputs.</li>
+<li>Interactive API documentation (Swagger UI and ReDoc).</li>
+</ul>
+<p>FastAPI plays a crucial role in exposing the model's prediction API for consumption by other services or clients.</p>
+<h3 id="example">Example:</h3>
+<p>```python
+from fastapi import FastAPI
+from prediction_model import generate_predictions</p>
+<p>app = FastAPI()</p>
+<p>@app.post("/predict")
+def predict(data: dict):
+    return {"prediction": generate_predictions(data)}</p>
               
             </div>
           </div><footer>
