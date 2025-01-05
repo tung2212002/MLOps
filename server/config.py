@@ -38,7 +38,7 @@ RUN_ID = os.getenv('RUN_ID', '')
 # Logging information
 LOG_LEVEL = int(os.getenv('LOG_LEVEL', 10))
 
-TRACKING_URI="http://ec2-54-173-194-157.compute-1.amazonaws.com:5000"
+TRACKING_URI="http://ec2-100-27-189-16.compute-1.amazonaws.com:5000"
 
 EXPERIMENT_NAME="life_expectancy_prediction_model"
 
