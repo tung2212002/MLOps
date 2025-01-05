@@ -31,3 +31,4 @@ EXPERIMENT_NAME="life_expectancy_prediction_model"
 MODEL_NAME="/LifeExpectancy-prediction-model"
 
 CONFIG_FILE="/app/prediction_model/config.yaml"
+
