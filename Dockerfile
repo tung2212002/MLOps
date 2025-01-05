@@ -36,3 +36,4 @@ RUN    dvc remote modify mlopsremote access_key_id ${AWS_ACCESS_KEY_ID} && \
     pytest -v /app/tests/test_prediction.py
 
 CMD ["uvicorn", "server.api:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
